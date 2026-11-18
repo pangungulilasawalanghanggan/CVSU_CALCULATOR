@@ -1,0 +1,36 @@
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import AppShell from "@/components/AppShell";
+import { cookies } from "next/headers";
+import { readSession, SESSION_COOKIE } from "../lib/auth";
+const inter = Inter({
+    subsets: ["latin"],
+    variable: "--font-inter",
+    display: "swap",
+});
+export const metadata: Metadata = {
+    title: "CvSU Grade & GWA Calculator",
+    description: "Convert raw scores to CvSU grade equivalents and compute your General Weighted Average. Built for Cavite State University students and faculty.",
+};
+export const viewport: Viewport = {
+    themeColor: "#2e7d32",
+    width: "device-width",
+    initialScale: 1,
+};
+export default async function RootLayout({ children, }: {
+    children: React.ReactNode;
+}) {
+    const session = readSession((await cookies()).get(SESSION_COOKIE)?.value);
+    return (<html lang="en" className={inter.variable}>
+      <body>
+        {session ? <AppShell user={{ name: session.name, email: session.email, picture: session.picture }}>{children}</AppShell> : <>
+          <Navbar />
+          <main className="min-h-screen pt-[72px]">{children}</main>
+          <Footer />
+        </>}
+      </body>
+    </html>);
+}

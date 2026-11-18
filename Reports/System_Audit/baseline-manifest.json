@@ -1,0 +1,106 @@
+[
+  {
+    "path": "src/app/globals.css",
+    "sha256": "369f6256e6ac3bd2787a795dd8977449e97a767169d4af46ab7195cdd6a99ce9"
+  },
+  {
+    "path": "src/app/layout.tsx",
+    "sha256": "58d61d0930334757f55175d8dcdb9e9e1713dbfede7356e1e7abfb7338262ca1"
+  },
+  {
+    "path": "src/app/page.tsx",
+    "sha256": "f2a9dde598072e58d39e5c16cd3a9f7c8ccf642d48ffce870af42a060a6d900f"
+  },
+  {
+    "path": "src/app/api/grade/route.ts",
+    "sha256": "931f0093d1cf12099238bd507c5450d4ed9cd3f795641710d41b61fb73d90854"
+  },
+  {
+    "path": "src/app/api/gwa/route.ts",
+    "sha256": "bef6ab1e2afeb87cf297f63bbadb671615d137fa2e4dd21de4dfcbe6ce074a42"
+  },
+  {
+    "path": "src/app/grade/page.tsx",
+    "sha256": "74121f798da3a48448625a5ca8847fdd19723715d195b01eb003ccf298382782"
+  },
+  {
+    "path": "src/app/grading-system/page.tsx",
+    "sha256": "bdfee2f29fb3a5c6020baa269ee4daf7d2e95c7f8b46ef95925b2c43b0cd6744"
+  },
+  {
+    "path": "src/app/gwa/page.tsx",
+    "sha256": "cff5af416f57735f34369dd129b0266e30bf4d5a065b4138ffce742c4610840d"
+  },
+  {
+    "path": "src/components/Footer.tsx",
+    "sha256": "97e682ffc9bc55bc3d423710e2e2ae87235b36140cbf479274875ff7d105aca0"
+  },
+  {
+    "path": "src/components/Logo.tsx",
+    "sha256": "1a69c78a49b8454992d5dd44577523c40dac88cf859eb8dddaae4a5cb9e37d68"
+  },
+  {
+    "path": "src/components/Navbar.tsx",
+    "sha256": "8ab1e56b7703470215d84104c5926e6a474a19222b29889fbc1a444d6d3bb81a"
+  },
+  {
+    "path": "src/lib/grading.cpp",
+    "sha256": "a9595d3a56fdf1e0fcb0ed4d141f37e64024ce807d8839fb8c3228ac12b0a6a3"
+  },
+  {
+    "path": "src/lib/grading.ts",
+    "sha256": "788e4cb6d9e4237f7079ee453e1c0878273931581659cc62bd1223d080781722"
+  },
+  {
+    "path": "scripts/build-cpp.bat",
+    "sha256": "c4eb81fda4f6a76faa07cdacaf0b21c79be09b77115a0f7f28a16a2badb2ea6f"
+  },
+  {
+    "path": "scripts/build-cpp.sh",
+    "sha256": "476316284e0477f5324cd3e7bc1a0b8ae7b9cd661ffba59abd69158380a9bdfe"
+  },
+  {
+    "path": "public/favicon.png",
+    "sha256": "6f05fd6b94aeab478483547d5af35c6330e2db2576cec154dbd5877ba7caa47f"
+  },
+  {
+    "path": "public/logo.png",
+    "sha256": "3de478735e68e6122ff72217544fad5d223974d5bfd934cc4c1e0a812d29c58c"
+  },
+  {
+    "path": "bin/grading.exe",
+    "sha256": "df9c7d48470d358eb5ea36e566e91b21331e229df6d5a7785a7a40b2c316cda2"
+  },
+  {
+    "path": "next-env.d.ts",
+    "sha256": "9269d492817e359123ac64c8205e5d05dab63d71a3a7a229e68b5d9a0e8150bf"
+  },
+  {
+    "path": "next.config.mjs",
+    "sha256": "73f18ea67787ab9d40bedbf6600bc6f822dfc31347374a54677d67a36567b20b"
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "5e43dd53da5e8c00712125f53e6300edc481e4a27025c75fe61d12a02a329e87"
+  },
+  {
+    "path": "package.json",
+    "sha256": "a88d366b66a167d9087770ea86a20269eebac4abec823f1b11eb12074bdb9cad"
+  },
+  {
+    "path": "postcss.config.mjs",
+    "sha256": "efa65c65e17d51d58570edce9d702b0604fdf6a9b8db65afaed8f075af8867c7"
+  },
+  {
+    "path": "README.md",
+    "sha256": "50fe41dc3674c5f120e49a02364a1954183da75597e481ae766e20c350bc9f4d"
+  },
+  {
+    "path": "tailwind.config.ts",
+    "sha256": "6db17112c1578d54ef31ee0654443801dd5d23e02dee065ae69d3eefe0613a61"
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "7f866bd1055e4194349a06f08710a651546606b9c5f139c7605243dbe64820fc"
+  }
+]

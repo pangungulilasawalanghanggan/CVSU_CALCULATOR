@@ -1,0 +1,83 @@
+SYSTEM HEALTH: NEEDS ATTENTION
+[PASS] Required file: src/app/page.tsx
+[PASS] Required file: src/app/login/page.tsx
+[PASS] Required file: src/components/AppShell.tsx
+[PASS] Required file: src/lib/grading.cpp
+[PASS] Required file: src/lib/auth.ts
+[PASS] Required file: src/lib/cpp-engine.ts
+[PASS] Required file: src/app/grade/layout.tsx
+[PASS] Required file: src/app/gwa/layout.tsx
+[PASS] Required file: src/app/grading-system/layout.tsx
+[PASS] Required file: public/team/profile.svg
+[PASS] Required file: public/team/profile-hover.svg
+[PASS] Required file: package.json
+[PASS] Required file: package-lock.json
+[PASS] Required file: README.md
+[PASS] Required file: .env.example
+[PASS] Required file: Reports/System_Audit/INITIAL_FINDINGS_AND_PLAN.md
+[PASS] Required file: Reports/System_Audit/SYSTEM_AUDIT_AND_IMPROVEMENT_REPORT.md
+[PASS] Required folder: src/app
+[PASS] Required folder: src/components
+[PASS] Required folder: src/lib
+[PASS] Required folder: public
+[PASS] Required folder: bin
+[PASS] Required folder: scripts
+[PASS] Required folder: tests
+[PASS] Original backup integrity
+  26 original files verified
+[PASS] Protected original images and binary unchanged
+  3 protected files verified
+[PASS] Source integrity snapshot
+  57 file hashes verified
+[PASS] Installed dependencies match lockfile
+[FAIL] Framework security prerequisite
+  Next.js 14.2.5: vendor lists all 14.x affected in May 2026. Approve a supported security upgrade and check current advisories before deployment. https://vercel.com/changelog/next-js-may-2026-security-release
+[PASS] Local source imports and public profile assets
+[PASS] Grading-policy consistency
+  11 C++ thresholds match the displayed guide
+[PASS] Google login configuration
+  Configured domains: cvsu.edu.ph. Live OAuth still requires manual verification.
+[PASS] C++ compiler
+  g++.exe (MinGW-W64 i686-ucrt-posix-dwarf, built by Brecht Sanders, r3) 16.2.0
+[PASS] TypeScript compilation
+[PASS] Automated unit, integration, error and regression suite
+  ✔ both APIs reject unauthenticated and forged-session requests (7.3712ms)
+✔ grade route reports malformed JSON and invalid numeric inputs as 400 (6.8332ms)
+✔ GWA route rejects invalid shapes, null records, zero/negative units and too many records (3.8279ms)
+✔ authenticated APIs integrate with the original C++ engine (73.7383ms)
+✔ missing engine returns safe 503 without leaking filesystem paths (3.168ms)
+✔ auth configuration fails closed with missing credentials, weak secret or insecure origins (1.3814ms)
+✔ session cookie signature, expiry, purpose and exact domain are enforced (1.7659ms)
+✔ authorization request contains random state, nonce, PKCE and Workspace hint (1.3103ms)
+✔ profile pictures allow only bounded Google HTTPS image URLs and preserve old sessions (7.6719ms)
+✔ signed Google ID token accepted only with verified CvSU Workspace identity (11.1002ms)
+✔ Google key-fetch outage fails safely (1.171ms)
+✔ OAuth start sets short-lived HttpOnly state cookie; missing setup returns 503 (15.5746ms)
+✔ OAuth callback blocks missing/mismatched state before contacting Google (17.2492ms)
+✔ full simulated OAuth callback issues session and discards flow cookie (2.2238ms)
+✔ session endpoint omits tokens and logout blocks cross-site requests (17.8698ms)
+✔ login destinations accept only the three protected pages (0.1757ms)
+✔ OAuth start signs the requested destination rather than trusting it on callback (0.8648ms)
+✔ successful login returns to GWA and ignores callback redirect injection (2.2346ms)
+✔ cancelled Google consent clears flow and preserves selected destination without exchanging tokens (0.7825ms)
+✔ a personal Google account returns actionable account error without issuing a session (1.4158ms)
+✔ percentages reject coercion, non-finite values and out-of-range numbers (1.1236ms)
+✔ subject and persisted-record validation prevents render crashes (0.4207ms)
+✔ platform-specific lookup and missing binary give useful failures (6.3767ms)
+✔ engine rejects missing executables, non-executable files, nonzero exits, timeouts and excess output (263.0531ms)
+✔ strict protocol rejects partial, invalid and cross-mode output (1.1086ms)
+✔ C++ grade boundaries match the displayed guide and GWA remains unchanged (642.2183ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1291.2986
+[WARN] Academic decisions pending
+  INC handling, official transmutation policy, GWA rounding, and full Latin honors eligibility require instructor/Registrar confirmation.
+[WARN] Provider and deployment verification
+  Live Google checks are recorded separately in the audit report; this command does not contact Google. Account switching/outages, additional campus domains, Linux compilation and Vercel deployment still need separate verification.
+
+Checks: 37; passed: 34; failed: 1; warnings: 2

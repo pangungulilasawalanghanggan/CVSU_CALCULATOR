@@ -1,0 +1,85 @@
+SYSTEM HEALTH: WARNINGS
+[PASS] Required file: src/app/page.tsx
+[PASS] Required file: src/app/login/page.tsx
+[PASS] Required file: src/components/AppShell.tsx
+[PASS] Required file: src/lib/grading.cpp
+[PASS] Required file: src/lib/auth.ts
+[PASS] Required file: src/lib/cpp-engine.ts
+[PASS] Required file: src/app/grade/layout.tsx
+[PASS] Required file: src/app/gwa/layout.tsx
+[PASS] Required file: src/app/grading-system/layout.tsx
+[PASS] Required file: public/team/profile.svg
+[PASS] Required file: public/team/profile-hover.svg
+[PASS] Required file: package.json
+[PASS] Required file: package-lock.json
+[PASS] Required file: README.md
+[PASS] Required file: .env.example
+[PASS] Required file: Reports/System_Audit/INITIAL_FINDINGS_AND_PLAN.md
+[PASS] Required file: Reports/System_Audit/SYSTEM_AUDIT_AND_IMPROVEMENT_REPORT.md
+[PASS] Required folder: src/app
+[PASS] Required folder: src/components
+[PASS] Required folder: src/lib
+[PASS] Required folder: public
+[PASS] Required folder: bin
+[PASS] Required folder: scripts
+[PASS] Required folder: tests
+[PASS] Original backup integrity
+  26 original files verified
+[PASS] Protected original images and binary unchanged
+  3 protected files verified
+[PASS] Source integrity snapshot
+  58 file hashes verified
+[PASS] Installed dependencies match lockfile
+[PASS] Framework security prerequisite
+  Review current vendor advisories before deployment; this is not a vulnerability database scan.
+[PASS] Local source imports and public profile assets
+[PASS] Grading-policy consistency
+  11 C++ thresholds match the displayed guide
+[PASS] Google login configuration
+  Configured domains: cvsu.edu.ph. Live OAuth still requires manual verification.
+[PASS] C++ compiler
+  g++.exe (MinGW-W64 i686-ucrt-posix-dwarf, built by Brecht Sanders, r3) 16.2.0
+[PASS] TypeScript compilation
+[PASS] Automated unit, integration, error and regression suite
+  ✔ both APIs reject unauthenticated and forged-session requests (24.3452ms)
+✔ grade route reports malformed JSON and invalid numeric inputs as 400 (13.2817ms)
+✔ GWA route rejects invalid shapes, null records, zero/negative units and too many records (4.1623ms)
+✔ authenticated APIs integrate with the original C++ engine (265.2732ms)
+✔ missing engine returns safe 503 without leaking filesystem paths (4.9628ms)
+✔ auth configuration fails closed with missing credentials, weak secret or insecure origins (3.861ms)
+✔ session cookie signature, expiry, purpose and exact domain are enforced (3.6482ms)
+✔ authorization request contains random state, nonce, PKCE and Workspace hint (4.4893ms)
+✔ profile pictures allow only bounded Google HTTPS image URLs and preserve old sessions (18.9994ms)
+✔ signed Google ID token accepted only with verified CvSU Workspace identity (48.5177ms)
+✔ Google key-fetch outage fails safely (2.7799ms)
+✔ OAuth start sets short-lived HttpOnly state cookie; missing setup returns 503 (37.1615ms)
+✔ OAuth callback blocks missing/mismatched state before contacting Google (55.1873ms)
+✔ full simulated OAuth callback issues session and discards flow cookie (11.8284ms)
+✔ session endpoint omits tokens and logout blocks cross-site requests (47.4195ms)
+✔ login destinations accept only the three protected pages (0.5132ms)
+✔ OAuth start signs the requested destination rather than trusting it on callback (2.7329ms)
+✔ successful login returns to GWA and ignores callback redirect injection (4.3833ms)
+✔ cancelled Google consent clears flow and preserves selected destination without exchanging tokens (2.0496ms)
+✔ a personal Google account returns actionable account error without issuing a session (4.5578ms)
+✔ percentages reject coercion, non-finite values and out-of-range numbers (4.4484ms)
+✔ subject and persisted-record validation prevents render crashes (0.7025ms)
+✔ platform-specific lookup and missing binary give useful failures (10.4484ms)
+✔ engine rejects missing executables, non-executable files, nonzero exits, timeouts and excess output (610.6961ms)
+✔ strict protocol rejects partial, invalid and cross-mode output (4.5005ms)
+✔ C++ grade boundaries match the displayed guide and GWA remains unchanged (3417.2624ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5025.2726
+[WARN] Development dependency advisories
+  2026-11-18 npm audit: ten high-severity development-toolchain findings associated with picomatch; npm audit --omit=dev reports zero. Review saved audit JSON and current advisories before release.
+[WARN] Academic decisions pending
+  INC handling, official transmutation policy, GWA rounding, and full Latin honors eligibility require instructor/Registrar confirmation.
+[WARN] Provider and deployment verification
+  Live Google checks are recorded separately in the audit report; this command does not contact Google. Account switching/outages, additional campus domains, Linux compilation and Vercel deployment still need separate verification.
+
+Checks: 38; passed: 35; failed: 0; warnings: 3

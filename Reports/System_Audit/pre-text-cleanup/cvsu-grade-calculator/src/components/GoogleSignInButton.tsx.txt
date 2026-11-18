@@ -1,0 +1,16 @@
+"use client";
+import { useState } from "react";
+export default function GoogleSignInButton({ configured, destination }: {
+    configured: boolean;
+    destination: string;
+}) {
+    const [pending, setPending] = useState(false);
+    return <form action="/api/auth/google" method="get" onSubmit={() => setPending(true)} className="mt-7">
+    <input type="hidden" name="next" value={destination}/>
+    <button type="submit" disabled={!configured || pending} className="btn-outline w-full gap-3 disabled:cursor-not-allowed disabled:opacity-60" aria-busy={pending}>
+      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.5-.2-2.2H12v4.2h5.4a4.6 4.6 0 0 1-2 3v2.5h3.3c1.9-1.8 2.9-4.4 2.9-7.5Z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.3l-3.3-2.5c-.9.6-2 1-3.4 1-2.6 0-4.9-1.8-5.7-4.2H2.9v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.3 14a6 6 0 0 1 0-4V7.4H2.9a10 10 0 0 0 0 9.2L6.3 14Z"/><path fill="#EA4335" d="M12 5.8c1.5 0 2.8.5 3.8 1.5l2.9-2.8A9.6 9.6 0 0 0 12 2a10 10 0 0 0-9.1 5.4L6.3 10C7.1 7.6 9.4 5.8 12 5.8Z"/></svg>
+      {pending ? "Connecting to Google…" : "Continue with Google"}
+    </button>
+    <p role="status" aria-live="polite" className="mt-3 text-center text-xs text-ink-soft">{pending ? "Choose your CvSU account on the Google sign-in page." : ""}</p>
+  </form>;
+}

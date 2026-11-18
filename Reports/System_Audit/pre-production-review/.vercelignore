@@ -1,0 +1,11 @@
+.env.local
+.env.local.*
+tools/
+node_modules/
+.next/
+.next-audit-build/
+build/
+bin/
+Reports/
+tests/
+docs/
