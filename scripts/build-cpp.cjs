@@ -19,7 +19,8 @@ fs.mkdirSync(folder, { recursive: true });
 const name = process.platform === 'win32' ? 'grading.exe' : 'grading';
 const output = path.join(folder, name);
 const temporary = path.join(folder, `${randomUUID()}-${name}`);
-const result = spawnSync(compiler, ['-O2', '-static', '-o', temporary, path.join(root, 'src/lib/grading.cpp')], { stdio: 'inherit', windowsHide: true });
+const linking = process.platform === 'win32' ? ['-static'] : [];
+const result = spawnSync(compiler, ['-O2', ...linking, '-o', temporary, path.join(root, 'src/lib/grading.cpp')], { stdio: 'inherit', windowsHide: true });
 if (result.error || result.status !== 0) {
     console.error('Compilation failed. Existing engine preserved.');
     process.exit(1);
