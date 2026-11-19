@@ -14,6 +14,13 @@ const inter = Inter({
 export const metadata: Metadata = {
     title: "CvSU Grade & GWA Calculator",
     description: "Convert raw scores to CvSU grade equivalents and compute your General Weighted Average. Built for Cavite State University students and faculty.",
+    icons: {
+        icon: [
+            { url: "/favicon.png", sizes: "64x64", type: "image/png" },
+            { url: "/brand-mark.svg", type: "image/svg+xml" },
+        ],
+        apple: "/apple-touch-icon.png",
+    },
 };
 export const viewport: Viewport = {
     themeColor: "#2e7d32",

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 interface AppUser {
@@ -38,15 +39,16 @@ function SidebarContent({ user, pathname }: {
     pathname: string;
 }) {
     return <div className="flex h-full flex-col overflow-y-auto px-5 py-6">
-    <div className="flex items-center gap-3 pr-6">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest-800 text-sm font-extrabold text-white">CvSU</span>
-      <div><p className="font-extrabold leading-tight text-forest-900">Grade & GWA</p><p className="mt-1 text-xs text-ink-soft">Student tools</p></div>
+    <div className="pr-2">
+      <Link href="/" aria-label="GradeOverview — CvSU Grade & GWA Calculator" className="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700">
+        <Image src="/brand-wordmark.png" alt="GradeOverview" width={810} height={230} className="h-auto w-40" />
+      </Link>
+      <p className="mt-1 text-xs text-ink-soft">Student tools</p>
     </div>
-    <p className="mb-3 mt-10 px-3 text-xs font-bold uppercase tracking-widest text-ink-soft">Your workspace</p>
-    <nav aria-label="Calculator tools" className="space-y-2">
+    <nav aria-label="Calculator tools" className="mt-8 space-y-2">
       {TOOLS.map(tool => {
             const active = pathname === tool.href;
-            return <Link key={tool.href} href={tool.href} aria-current={active ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-3.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700 ${active ? "bg-forest-800 text-white shadow-sm" : "text-ink-soft hover:bg-mint-50 hover:text-forest-900"}`}>
+            return <Link key={tool.href} href={tool.href} aria-current={active ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-3.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700 ${active ? "bg-mint-50 text-forest-900" : "text-ink-soft hover:bg-mint-50 hover:text-forest-900"}`}>
           <ToolIcon icon={tool.icon}/><span>{tool.label}</span>
         </Link>;
         })}

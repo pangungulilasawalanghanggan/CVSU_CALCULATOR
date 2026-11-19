@@ -3,13 +3,15 @@ import TeamProfiles from "../components/TeamProfiles";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { readSession, SESSION_COOKIE } from "../lib/auth";
+import TRANSMUTATION from "../lib/transmutation.json";
+const FEATURED_GRADE_ROW = TRANSMUTATION.find((row) => row.grade === "1.75");
 export default async function HomePage() {
     if (readSession((await cookies()).get(SESSION_COOKIE)?.value))
         redirect("/grade");
     return (<>
       
       <section className="hero-wash">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24 grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:items-center">
           <div className="max-w-3xl">
             <p className="section-label mb-4">Cavite State University</p>
             <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-extrabold text-forest-900 tracking-tight leading-[1.15]">
@@ -29,6 +31,28 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
+          <aside aria-label="Example CvSU grade conversion" className="card p-6 sm:p-8">
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-lg font-bold text-forest-900">From percentage to grade</h2>
+              <span className="shrink-0 rounded-full bg-mint-50 px-3 py-1 text-xs font-semibold text-forest-800">Example</span>
+            </div>
+            <div className="mt-7 grid grid-cols-[max-content_auto_minmax(0,1fr)] items-center gap-4">
+              <div className="min-w-0">
+                <p className="text-sm text-ink-soft">Percentage range</p>
+                <p className="mt-2 whitespace-nowrap text-xl font-extrabold tracking-tight text-forest-900">{FEATURED_GRADE_ROW?.range ?? "—"}%</p>
+              </div>
+              <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-forest-700">
+                <path d="M5 12h14m-6-6 6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <div className="min-w-0">
+                <p className="text-sm text-ink-soft">CvSU grade</p>
+                <p className="mt-2 text-3xl font-extrabold tracking-tight text-forest-900">{FEATURED_GRADE_ROW?.grade ?? "—"}</p>
+              </div>
+            </div>
+            <p className="mt-6 border-t border-mint-100 pt-4 text-sm leading-relaxed text-ink-soft">
+              A percentage in this range maps to the grade shown.
+            </p>
+          </aside>
         </div>
       </section>
 
@@ -40,7 +64,7 @@ export default async function HomePage() {
             Everything you need for grades
           </h2>
 
-          <div className="feature-cards mt-12 grid auto-rows-fr md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="feature-cards mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             
             <div className="card p-7 hover:shadow-float transition">
               <div className="icon-chip bg-mint-50 text-forest-800 mb-5">
@@ -76,7 +100,7 @@ export default async function HomePage() {
             </div>
 
             
-            <div className="card p-7 hover:shadow-float transition md:col-span-2 xl:col-span-1">
+            <div className="card feature-card-guide p-7 hover:shadow-float transition md:col-span-2 lg:col-span-1">
               <div className="icon-chip bg-mint-50 text-forest-800 mb-5">
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 6v6l4 2M12 3a9 9 0 100 18 9 9 0 000-18z"/>

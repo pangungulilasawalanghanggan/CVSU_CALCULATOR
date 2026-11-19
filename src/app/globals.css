@@ -11,7 +11,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16.5px;
+  font-size: 18px;
   overflow-x: hidden;
 }
 
@@ -20,6 +20,10 @@ body {
   overflow-x: hidden;
   max-width: 100vw;
 }
+
+body:has(.login-page) > header,
+body:has(.login-page) > footer { display: none; }
+body:has(.login-page) > main { min-height: 100dvh; padding-top: 0; }
 
 @layer components {
   .btn {
@@ -112,7 +116,7 @@ body {
 .calculator-workspace .laboratory-components > .border { padding: 1rem; }
 .calculator-workspace .lecture-components .grid.items-center.py-2,
 .calculator-workspace .laboratory-components .grid.items-center.py-2 { padding-block: .4rem; }
-.calculator-workspace .workspace-heading .section-label { margin-bottom: .25rem; font-size: .65rem; line-height: 1.4; letter-spacing: .15em; }
+.calculator-workspace .workspace-heading .section-label { margin-bottom: .25rem; font-size: .75rem; line-height: 1.4; letter-spacing: .15em; }
 .calculator-workspace .workspace-heading h1 { margin: 0; font-weight: 800; letter-spacing: -.025em; }
 .calculator-workspace .workspace-heading .workspace-description { margin: .35rem 0 0; font-size: .8125rem; line-height: 1.45; }
 .calculator-workspace button.rounded-full { padding: .4rem .9rem; font-size: .8125rem; }
@@ -153,17 +157,17 @@ body {
   .calculator-workspace .laboratory-components > :first-child { grid-column: 1 / -1; }
   .calculator-workspace .lecture-components.space-y-6 > :not([hidden]) ~ :not([hidden]),
   .calculator-workspace .laboratory-components.space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: 0; }
-  .calculator-workspace .gwa-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .875rem; align-items: stretch; }
+  .calculator-workspace .gwa-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .875rem; align-items: start; }
   .calculator-workspace .gwa-heading, .calculator-workspace .gwa-privacy,
   .calculator-workspace .gwa-storage { grid-column: 1 / -1; margin-bottom: 0; }
   .calculator-workspace .gwa-content > .card { margin: 0; }
-  .calculator-workspace .guide-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
+  .calculator-workspace .guide-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
   .calculator-workspace .guide-heading, .calculator-workspace .guide-actions,
   .calculator-workspace .guide-content > section:last-of-type { grid-column: 1 / -1; }
   .calculator-workspace .guide-content > .card { margin-bottom: 0; }
 }
 @container calculator (min-width: 1050px) {
-  .calculator-workspace .guide-content { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .875rem; align-items: stretch; }
+  .calculator-workspace .guide-content { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .875rem; align-items: start; }
   .calculator-workspace .guide-heading, .calculator-workspace .guide-actions { grid-column: 1 / -1; }
   .calculator-workspace .guide-content > .card { margin-bottom: 0; }
   .calculator-workspace .guide-content > section:last-of-type { grid-column: auto; }
@@ -173,15 +177,20 @@ body {
 .calculator-workspace .guide-content td, .calculator-workspace .guide-content th { overflow-wrap: anywhere; padding-right: .4rem; }
 .calculator-workspace .guide-content section > .grid { gap: .75rem; }
 .calculator-workspace .guide-content .bg-mint-50\/70 { padding: .75rem; }
-.calculator-workspace .gwa-form, .calculator-workspace .gwa-subjects { height: 17.5rem; }
 .calculator-workspace .gwa-subjects { position: relative; display: flex; flex-direction: column; }
-.calculator-workspace .subject-list { height: 11.75rem; flex-shrink: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-width: none; -ms-overflow-style: none; border-radius: .5rem; }
+.calculator-workspace .subject-list { max-height: 11.75rem; flex-shrink: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-width: none; -ms-overflow-style: none; border-radius: .5rem; }
 .calculator-workspace .subject-list table { table-layout: fixed; }
 .calculator-workspace .subject-list thead tr { height: 2rem; }
 .calculator-workspace .subject-list tbody tr { height: 3.25rem; }
 .calculator-workspace .subject-list tbody td { padding-top: .25rem; padding-bottom: .25rem; }
 .calculator-workspace .subject-list::-webkit-scrollbar { display: none; }
 .calculator-workspace .subject-list:focus-visible { outline: 2px solid #388e3c; outline-offset: 3px; }
+.calculator-workspace .grade-multi-items-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.calculator-workspace .grade-multi-items-scroll::-webkit-scrollbar { display: none; }
+.calculator-workspace .grade-multi-items-scroll:focus-visible { outline: 2px solid #388e3c; outline-offset: 2px; }
+@media (min-width: 768px) {
+  .calculator-workspace .grade-multi-items-scroll { max-height: 8.25rem; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; }
+}
 .calculator-workspace .subject-scroll-hint { position: absolute; bottom: .4rem; right: 1.25rem; margin: 0; line-height: 1rem; font-size: .65rem; }
 .calculator-workspace .gwa-mobile-content {
   display: flex; flex-direction: column; gap: .625rem; height: calc(100dvh - 5.5rem - env(safe-area-inset-bottom));
@@ -210,4 +219,19 @@ body {
 .feature-cards > .card { display: flex; flex-direction: column; height: 100%; }
 .feature-cards .icon-chip { flex-shrink: 0; }
 .feature-cards > .card > a { margin-top: auto; padding-top: 1.25rem; }
+@media (min-width: 768px) and (max-width: 1023px) {
+  .feature-cards > .feature-card-guide {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 1rem;
+    row-gap: .35rem;
+    height: auto;
+  }
+  .feature-card-guide > .icon-chip { grid-column: 1; grid-row: 1 / 3; margin: 0; }
+  .feature-card-guide > h3 { grid-column: 2; grid-row: 1; }
+  .feature-card-guide > p { grid-column: 2; grid-row: 2; margin-top: 0; }
+  .feature-card-guide > a { grid-column: 3; grid-row: 1 / 3; align-self: center; margin-top: 0; padding-top: 0; }
+}
 

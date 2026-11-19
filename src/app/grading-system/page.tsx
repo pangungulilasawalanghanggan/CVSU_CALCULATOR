@@ -13,7 +13,7 @@ const SAMPLE_WEIGHTS = [
 ];
 export default function GradingSystemPage() {
     return (<div className="hero-wash min-h-[calc(100vh-72px)]">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6 py-10 lg:py-14 guide-content">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10 lg:py-14 guide-content">
         
         <div className="mb-10 guide-heading workspace-heading">
           <p className="section-label mb-2">Reference</p>
@@ -127,14 +127,6 @@ export default function GradingSystemPage() {
         </section>
 
         
-        <div className="flex flex-wrap gap-3 guide-actions">
-          <Link href="/grade" className="btn-primary">
-            Open Grade Calculator
-          </Link>
-          <Link href="/gwa" className="btn-outline">
-            Open GWA Calculator
-          </Link>
-        </div>
       </div>
     </div>);
 }

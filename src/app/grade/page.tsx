@@ -62,19 +62,25 @@ function NumberInput({ value, onChange, className = "input-field text-center", p
             e.target.select();
         }} onChange={(e) => {
             const t = e.target.value;
-            if (t !== "" && !/^-?\d*\.?\d*$/.test(t))
+            if (t !== "" && !/^\d*\.?\d*$/.test(t))
                 return;
-            setText(t);
-            if (t === "" || t === "-" || t === "." || t === "-.") {
+            if (t === "" || t === ".") {
+                setText(t);
                 return;
             }
-            let n = parseFloat(t);
+            const normalized = t.replace(/^0+(?=\d|\.)/, "").replace(/^\./, "0.");
+            let n = parseFloat(normalized);
             if (!Number.isFinite(n))
                 return;
             if (min !== undefined && n < min)
                 n = min;
-            if (max !== undefined && n > max)
+            if (max !== undefined && n > max) {
                 n = max;
+                setText(String(max));
+            }
+            else {
+                setText(normalized);
+            }
             onChange(n);
         }} onBlur={() => {
             setFocused(false);
@@ -111,6 +117,8 @@ function SingleScoreRow({ label, score, setScore, outOf, setOutOf, weight, setWe
     function handleOutOf(n: number) {
         if (n < 1)
             n = 1;
+        if (n > 250)
+            n = 250;
         setOutOf(n);
         if (score > n)
             setScore(n);
@@ -133,7 +141,7 @@ function SingleScoreRow({ label, score, setScore, outOf, setOutOf, weight, setWe
       <div className="col-span-1 flex justify-center text-ink-soft text-sm">/</div>
       <div className="col-span-3 sm:col-span-2">
         <span className="mb-1 block text-xs text-ink-soft sm:hidden">Out of</span>
-        <NumberInput value={outOf} onChange={handleOutOf} min={1} placeholder="Out of" ariaLabel={`${label} maximum score`}/>
+        <NumberInput value={outOf} onChange={handleOutOf} min={1} max={250} placeholder="Out of" ariaLabel={`${label} maximum score`}/>
       </div>
       <div className="col-span-4 sm:col-span-2 flex items-center gap-1">
         <div className="min-w-0 flex-1"><span className="mb-1 block text-xs text-ink-soft sm:hidden">Weight</span><NumberInput value={weight} onChange={handleWeight} min={0} max={maxWeight} ariaLabel={`${label} weight percentage`}/></div>
@@ -194,6 +202,7 @@ function MultiItemSection({ title, itemLabel, items, setItems, weight, setWeight
         <div className="col-span-2 text-right">%</div>
       </div>
 
+      <div className={`grade-multi-items ${items.length > 2 ? "grade-multi-items-scroll" : ""}`} role={items.length > 2 ? "region" : undefined} aria-label={items.length > 2 ? `${title} items` : undefined} tabIndex={items.length > 2 ? 0 : undefined}>
       {items.map((item, index) => {
             const itemPct = pct(item.score, item.outOf);
             return (<div key={item.id} className="grid grid-cols-12 gap-2 items-center bg-mint-50/40 rounded-lg px-2 py-2">
@@ -214,10 +223,12 @@ function MultiItemSection({ title, itemLabel, items, setItems, weight, setWeight
               <NumberInput value={item.outOf} onChange={(n) => {
                     if (n < 1)
                         n = 1;
+                    if (n > 250)
+                        n = 250;
                     updateItem(item.id, "outOf", n);
                     if (item.score > n)
                         updateItem(item.id, "score", n);
-                }} min={1} className="input-field text-center py-2" placeholder="Out of" ariaLabel={`${itemLabel} ${index + 1} maximum score`}/>
+                }} min={1} max={250} className="input-field text-center py-2" placeholder="Out of" ariaLabel={`${itemLabel} ${index + 1} maximum score`}/>
             </div>
             <div className="col-span-3 sm:col-span-2 flex items-center justify-end gap-2">
               <span className="text-sm font-semibold text-forest-700">
@@ -229,6 +240,7 @@ function MultiItemSection({ title, itemLabel, items, setItems, weight, setWeight
             </div>
           </div>);
         })}
+      </div>
 
       <button type="button" onClick={addItem} className="btn-secondary btn-sm text-xs w-full sm:w-auto">
         + Add another
