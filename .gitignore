@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.next-audit-build/
+build/
+tools/
+.env*
+!.env.example
+*.tsbuildinfo
+Reports/System_Audit/originals/

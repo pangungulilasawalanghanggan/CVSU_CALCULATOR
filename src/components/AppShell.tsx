@@ -1,0 +1,110 @@
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+interface AppUser {
+    name: string;
+    email: string;
+    picture?: string;
+}
+const TOOLS = [
+    { href: "/grade", label: "Grade Calculator", mobileLabel: "Calculator", icon: "grade" },
+    { href: "/gwa", label: "GWA Calculator", mobileLabel: "GWA", icon: "gwa" },
+    { href: "/grading-system", label: "Grading System", mobileLabel: "Grading", icon: "guide" },
+];
+function ToolIcon({ icon }: {
+    icon: string;
+}) {
+    return <svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+    {icon === "grade" ? <><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2m4 0h2m-8 4h2m4 0h2m-8 3h2m4 0h2"/></>
+            : icon === "gwa" ? <><path d="M4 4v16h16M8 15l4-5 4 3 4-7"/></>
+                : icon === "profile" ? <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="9" r="3"/><path d="M5.5 18a7 7 0 0 1 13 0"/></>
+                    : <><path d="M12 5v16M3 3h5a4 4 0 0 1 4 3 4 4 0 0 1 4-3h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3Z"/></>}
+  </svg>;
+}
+function ProfileAvatar({ user, className }: {
+    user: AppUser;
+    className: string;
+}) {
+    const [failed, setFailed] = useState(false);
+    const initials = user.name.trim().split(/\s+/).slice(0, 2).map(part => part[0]).join("").toUpperCase() || "CS";
+    return <span aria-hidden="true" className={`inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-mint-50 font-bold text-forest-800 ${className}`}>
+    
+    {user.picture && !failed ? <img src={user.picture} alt="" width={48} height={48} referrerPolicy="no-referrer" onError={() => setFailed(true)} className="h-full w-full object-cover"/> : initials}
+  </span>;
+}
+function SidebarContent({ user, pathname }: {
+    user: AppUser;
+    pathname: string;
+}) {
+    return <div className="flex h-full flex-col overflow-y-auto px-5 py-6">
+    <div className="pr-2">
+      <Link href="/" aria-label="GradeOverview — CvSU Grade & GWA Calculator" className="inline-flex rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700">
+        <Image src="/brand-wordmark.png" alt="GradeOverview" width={810} height={230} className="h-auto w-40" />
+      </Link>
+      <p className="mt-1 text-xs text-ink-soft">Student tools</p>
+    </div>
+    <nav aria-label="Calculator tools" className="mt-8 space-y-2">
+      {TOOLS.map(tool => {
+            const active = pathname === tool.href;
+            return <Link key={tool.href} href={tool.href} aria-current={active ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-3 py-3.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700 ${active ? "bg-mint-50 text-forest-900" : "text-ink-soft hover:bg-mint-50 hover:text-forest-900"}`}>
+          <ToolIcon icon={tool.icon}/><span>{tool.label}</span>
+        </Link>;
+        })}
+    </nav>
+    <div className="mt-auto pt-8">
+      <div className="flex min-w-0 items-center gap-3 border-t border-mint-100 pt-5">
+        <ProfileAvatar user={user} className="h-10 w-10 text-sm"/>
+        <div className="min-w-0"><p className="truncate text-sm font-semibold text-forest-900" title={user.name}>{user.name}</p><p className="truncate text-xs text-ink-soft" title={user.email}>{user.email}</p></div>
+      </div>
+      <form action="/api/auth/logout" method="post" className="mt-4">
+        <button type="submit" className="btn-secondary btn-sm w-full">Sign out</button>
+      </form>
+    </div>
+  </div>;
+}
+export default function AppShell({ user, children }: {
+    user: AppUser;
+    children: React.ReactNode;
+}) {
+    const pathname = usePathname();
+    const accountSheet = useRef<HTMLDialogElement>(null);
+    const [profileOpen, setProfileOpen] = useState(false);
+    useEffect(() => {
+        if (!profileOpen)
+            return;
+        const previous = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        return () => { document.body.style.overflow = previous; };
+    }, [profileOpen]);
+    return <div className="min-h-[100dvh]">
+    <aside aria-label="Workspace sidebar" className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-mint-100 bg-white xl:block">
+      <SidebarContent user={user} pathname={pathname}/>
+    </aside>
+    <div className="min-w-0 pb-[calc(5.5rem+env(safe-area-inset-bottom))] xl:pl-64 xl:pb-0">
+      <main id="app-main" className="calculator-workspace min-w-0">{children}</main>
+    </div>
+    <nav aria-label="Mobile calculator tools" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 gap-1 border-t border-mint-100 bg-white/95 px-2 pt-2 pb-[calc(.5rem+env(safe-area-inset-bottom))] backdrop-blur xl:hidden">
+      {TOOLS.map(tool => <Link key={tool.href} href={tool.href} aria-label={tool.label} aria-current={pathname === tool.href ? "page" : undefined} className={`flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 text-center text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700 ${pathname === tool.href ? "bg-mint-50 text-forest-900" : "text-ink-soft hover:bg-mint-50"}`}>
+        <ToolIcon icon={tool.icon}/><span>{tool.mobileLabel}</span>
+      </Link>)}
+      <button type="button" aria-label="Profile" aria-haspopup="dialog" aria-controls="account-profile-sheet" onClick={() => { accountSheet.current?.showModal(); setProfileOpen(true); }} className={`flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1 py-2 text-center text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest-700 ${profileOpen ? "bg-mint-50 text-forest-900" : "text-ink-soft hover:bg-mint-50"}`}>
+        <ProfileAvatar user={user} className="h-6 w-6 text-[.6rem]"/><span>Profile</span>
+      </button>
+    </nav>
+    <dialog ref={accountSheet} id="account-profile-sheet" aria-labelledby="account-sheet-title" onClose={() => setProfileOpen(false)} onClick={event => {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)
+                accountSheet.current?.close();
+        }} className="fixed inset-0 m-auto max-h-[85dvh] w-[calc(100%_-_2rem)] max-w-md overflow-y-auto rounded-2xl border border-mint-100 bg-white p-6 text-ink shadow-2xl backdrop:bg-black/40">
+      <button type="button" aria-label="Close profile" onClick={() => accountSheet.current?.close()} className="absolute right-4 top-4 rounded-lg p-2 text-ink-soft hover:bg-mint-50 focus-visible:ring-2 focus-visible:ring-forest-700">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+      <h2 id="account-sheet-title" className="text-lg font-bold text-forest-900">Account</h2>
+      <div className="mt-4 flex items-center gap-3"><ProfileAvatar user={user} className="h-12 w-12 text-base"/><div className="min-w-0"><p className="break-words font-semibold text-forest-900">{user.name}</p><p className="mt-1 break-all text-sm text-ink-soft">{user.email}</p></div></div>
+      <p className="mt-3 text-xs text-ink-soft">Local demo account. This sample identity is not verified by Google.</p>
+      <form action="/api/auth/logout" method="post" className="mt-5"><button type="submit" className="btn-primary w-full">Log out</button></form>
+    </dialog>
+  </div>;
+}
