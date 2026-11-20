@@ -29,7 +29,19 @@ export default function GWACalculatorPage() {
         subject: Subject;
     } | null>(null);
     const subjectList = useRef<HTMLDivElement>(null);
+    const subjectScrollIdleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [subjectScrollIdle, setSubjectScrollIdle] = useState(true);
     const [listOverflows, setListOverflows] = useState(false);
+    useEffect(() => () => {
+        if (subjectScrollIdleTimer.current)
+            clearTimeout(subjectScrollIdleTimer.current);
+    }, []);
+    function handleSubjectListScroll() {
+        setSubjectScrollIdle(false);
+        if (subjectScrollIdleTimer.current)
+            clearTimeout(subjectScrollIdleTimer.current);
+        subjectScrollIdleTimer.current = setTimeout(() => setSubjectScrollIdle(true), 2600);
+    }
     useEffect(() => {
         const media = window.matchMedia("(max-width: 899px), (max-width: 1279px) and (max-height: 819px), (max-height: 699px)");
         const update = () => { setCompact(media.matches); if (!media.matches)
@@ -185,7 +197,7 @@ export default function GWACalculatorPage() {
               <label htmlFor="subject-name" className="block text-sm font-medium text-ink mb-1.5">
                 Subject name
               </label>
-              <input id="subject-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="input-field" placeholder="e.g. IT 101 – Introduction to Computing" onKeyDown={(e) => e.key === "Enter" && addSubject()}/>
+              <input id="subject-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="input-field" placeholder="DCIT 26 - Application Development and Emerging Technologies" onKeyDown={(e) => e.key === "Enter" && addSubject()}/>
             </div>
             <div>
               <label htmlFor="subject-units" className="block text-sm font-medium text-ink mb-1.5">
@@ -246,7 +258,7 @@ export default function GWACalculatorPage() {
 
           {subjects.length === 0 ? (<p className="text-sm text-ink-soft py-6 text-center">
               No subjects yet. Add one above to start computing your GWA.
-            </p>) : (<div ref={subjectList} className="subject-list" role="region" aria-label="Saved subjects" tabIndex={0}>
+            </p>) : (<div ref={subjectList} className={`subject-list${subjects.length > 3 ? ` subject-list-scroll${subjectScrollIdle ? " subject-list-idle" : ""}` : ""}`} onScroll={subjects.length > 3 ? handleSubjectListScroll : undefined} role="region" aria-label="Saved subjects" tabIndex={0}>
               <table className="w-full text-sm">
                 <colgroup><col style={{ width: "40%" }}/><col style={{ width: "18%" }}/><col style={{ width: "20%" }}/><col style={{ width: "22%" }}/></colgroup>
                 <thead className="sticky top-0 z-10 bg-white">
@@ -333,7 +345,7 @@ export default function GWACalculatorPage() {
             setEditing(null);
         }}/>;
     if (compact)
-        return <><MobileGWAView count={subjects.length} units={subjects.reduce((sum, subject) => sum + subject.units, 0)} result={subjects.length === 0 || pending || cppError ? "—" : formatGrade(gwa)} honors={subjects.length && !cppError ? honors : ""} pending={pending} error={cppError} expired={authExpired} storageError={storageError} onRetry={() => setRetry(value => value + 1)} addOpen={mobileAddOpen} onAdd={() => setMobileAddOpen(true)} onCloseAdd={() => setMobileAddOpen(false)} subjectForm={subjectForm} subjectsCard={subjectsCard} honorsCard={honorsCard}/>{editor}</>;
+        return <><MobileGWAView result={subjects.length === 0 || pending || cppError ? "—" : formatGrade(gwa)} honors={subjects.length && !cppError ? honors : ""} pending={pending} error={cppError} expired={authExpired} storageError={storageError} onRetry={() => setRetry(value => value + 1)} addOpen={mobileAddOpen} onAdd={() => setMobileAddOpen(true)} onCloseAdd={() => setMobileAddOpen(false)} subjectForm={subjectForm} subjectsCard={subjectsCard} honorsCard={honorsCard}/>{editor}</>;
     return (<div className="hero-wash min-h-[calc(100vh-72px)]">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 py-10 lg:py-14 gwa-content">
         
@@ -347,7 +359,6 @@ export default function GWACalculatorPage() {
 
         
         {storageError && <p role="alert" className="mb-5 rounded-xl bg-amber-50 p-4 text-sm text-amber-900 gwa-storage">{storageError}</p>}
-        <p className="mb-5 text-xs text-ink-soft gwa-privacy">Saved subjects stay in this browser, including after sign-out. Avoid saving private grades on a shared computer. Maximum {MAX_SUBJECTS} subjects.</p>
         {subjectForm}
 
         

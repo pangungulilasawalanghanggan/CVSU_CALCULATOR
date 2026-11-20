@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 interface Props {
-    count: number;
-    units: number;
     result: string;
     honors: string;
     pending: boolean;
@@ -50,7 +48,7 @@ export default function MobileGWAView(props: Props) {
     <div className="gwa-mobile-content">
       <div className="workspace-heading shrink-0">
       <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0"><p className="section-label">Multiple Subjects</p><h1 className="font-extrabold text-forest-900 tracking-tight">GWA Calculator</h1><p className="mt-1 text-xs text-ink-soft">{props.count} {props.count === 1 ? "subject" : "subjects"} · {props.units} {props.units === 1 ? "unit" : "units"}</p></div>
+        <div className="min-w-0"><p className="section-label">Multiple Subjects</p><h1 className="font-extrabold text-forest-900 tracking-tight">GWA Calculator</h1></div>
         {!inlineAdd && <button type="button" onClick={props.onAdd} className="btn-primary btn-sm shrink-0" aria-label="Add subject">+ Add</button>}
       </div>
       

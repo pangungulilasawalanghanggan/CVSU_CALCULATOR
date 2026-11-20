@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useEffect, type Dispatch, type SetStateAction } from "react";
+import { useState, useMemo, useEffect, useRef, type Dispatch, type SetStateAction } from "react";
 const LECTURE_DEFAULTS = {
     midterm: 20,
     finalExam: 20,
@@ -162,6 +162,19 @@ function MultiItemSection({ title, itemLabel, items, setItems, weight, setWeight
     avgPct: number;
     maxWeight: number;
 }) {
+    const [scrollIdle, setScrollIdle] = useState(true);
+    const scrollIdleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const hasScrollableList = (title === "Outputs / Assignments" || title === "Quizzes / Long Exams") && items.length > 2;
+    useEffect(() => () => {
+        if (scrollIdleTimer.current)
+            clearTimeout(scrollIdleTimer.current);
+    }, []);
+    function handleItemsScroll() {
+        setScrollIdle(false);
+        if (scrollIdleTimer.current)
+            clearTimeout(scrollIdleTimer.current);
+        scrollIdleTimer.current = setTimeout(() => setScrollIdle(true), 2600);
+    }
     function updateItem(id: number, field: "score" | "outOf", value: number) {
         setItems((current) => current.map((item) => item.id === id ? { ...item, [field]: value } : item));
     }
@@ -202,7 +215,7 @@ function MultiItemSection({ title, itemLabel, items, setItems, weight, setWeight
         <div className="col-span-2 text-right">%</div>
       </div>
 
-      <div className={`grade-multi-items ${items.length > 2 ? "grade-multi-items-scroll" : ""}`} role={items.length > 2 ? "region" : undefined} aria-label={items.length > 2 ? `${title} items` : undefined} tabIndex={items.length > 2 ? 0 : undefined}>
+      <div className={`grade-multi-items ${hasScrollableList ? `grade-multi-items-scroll${scrollIdle ? " grade-multi-items-idle" : ""}` : ""}`} onScroll={hasScrollableList ? handleItemsScroll : undefined} role={hasScrollableList ? "region" : undefined} aria-label={hasScrollableList ? `${title} items` : undefined} tabIndex={hasScrollableList ? 0 : undefined}>
       {items.map((item, index) => {
             const itemPct = pct(item.score, item.outOf);
             return (<div key={item.id} className="grid grid-cols-12 gap-2 items-center bg-mint-50/40 rounded-lg px-2 py-2">
